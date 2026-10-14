@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatório PdfLoom</title>
+<style>
+@page { size:A4; margin:20mm;
+ @top-center { content:"RELATÓRIO TÉCNICO"; font-size:10pt; color:#24646d; }
+ @bottom-right { content:"Página " counter(page) " de " counter(pages); font-size:9pt; }
+}
+body { margin:0; font:11pt/1.4 Roboto; counter-reset:chapter; }
+h1 { counter-increment:chapter; color:#24646d; }
+h1::before { content:"Capítulo " counter(chapter) " — "; }
+.cards { display:flex; gap:12pt; }.cards article {flex:1; padding:10pt; background:#e8f0f2;}
+.grid {display:grid;grid-template-columns:1fr 2fr;gap:10pt;}
+.grid div { padding:8pt; border:1pt solid #24646d; }
+table {width:100%;border-collapse:collapse;}th,td{padding:6pt;border:.5pt solid #555;}
+th {background:#24646d;color:white;}tr{break-inside:avoid;}
+section {break-before:page;}
+a::after {content:" (página " target-counter(attr(href),page) ")";}
+</style></head><body>
+<h1 id="overview">Visão geral</h1>
+<p>Acentos e símbolos: ação, veículo, € e Ω. Texto com fontes incorporadas e navegação clicável.</p>
+<p><a href="#details">Consultar resultados</a></p>
+<div class="cards"><article><strong>Documentos</strong><p>48 relatórios</p></article><article><strong>Receita</strong><p>R$ 12.500,00</p></article></div>
+<section><h1 id="details">Resultados</h1>
+<div class="grid"><div>Identificação</div><div>Relatório demonstrativo</div><div style="grid-column:span 2">Duas colunas com dimensionamento por frações.</div></div>
+<table><thead><tr><th>Item</th><th>Descrição</th><th>Estado</th></tr></thead><tbody>
+<tr><td rowspan="2">1</td><td>Motor</td><td>Verificado</td></tr><tr><td>Transmissão</td><td>Verificado</td></tr>
+<tr><td>2</td><td colspan="2">Inspeção demonstrativa concluída</td></tr></tbody></table>
+</section></body></html>

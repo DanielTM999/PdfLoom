@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Recursos de impressão PdfLoom</title>
+    <style>
+        @layer base, report;
+        @layer base {
+            body { font-family: serif; color: #173547; font-size: 11pt; }
+        }
+        @page {
+            size: A4;
+            margin: 48pt 40pt;
+            @top-left { content: element(report-heading); font-size: 8pt; }
+            @bottom-left { content: "DADOS DEMONSTRATIVOS"; font-size: 8pt; }
+            @bottom-right { content: "Página " counter(page) " de " counter(pages); font-size: 8pt; }
+        }
+        @layer report {
+            body { margin: 0; counter-reset: chapter; }
+            header { position: running(report-heading); font-size: 8pt; line-height: 10pt; }
+            h1 { counter-increment: chapter; break-before: page; font-size: 23pt; }
+            h1::before { content: counter(chapter) ". "; }
+            h2 { font-size: 15pt; }
+            p { line-height: 1.4; }
+            .cards {
+                display: grid;
+                grid-template-columns: [start] minmax(120pt, 1fr) [middle] minmax(120pt, 1fr) [end];
+                gap: 16pt;
+                & article { padding: 16pt; background: linear-gradient(135deg, #edf8fb, #d9e9f3); border-radius: 7pt; }
+            }
+            .label { font-family: sans-serif; font-size: 9pt; text-transform: uppercase; }
+            .value { font-size: 19pt; font-weight: bold; margin: 6pt 0; }
+            .columns { column-count: 2; column-gap: 22pt; column-rule: 1pt solid #c5d7e2; }
+            .columns p { margin: 0 0 10pt; }
+            .relief { border: 6pt double #207788; padding: 12pt; }
+            .reference::after { content: " — capítulo " target-counter(attr(href), chapter) ", página " target-counter(attr(href), page); }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1pt solid #adc3d0; padding: 8pt; }
+            thead { background: #d9e9f3; }
+            tbody { background: #f5f9fb; }
+        }
+    </style>
+</head>
+<body>
+    <header>PDFLOOM · RELATÓRIO DEMONSTRATIVO<br>HTML/CSS estático, com referências internas</header>
+    <h2>Recursos de impressão</h2>
+    <p>Este exemplo reúne funcionalidades validadas nesta etapa. Os dados são fictícios.</p>
+    <nav data-pdfloom-toc></nav>
+    <h1 id="summary">Resumo executivo</h1>
+    <div class="cards">
+        <article><div class="label">Identificação</div><p class="value">ABC1D23</p><p>Registro demonstrativo</p></article>
+        <article><div class="label">Resultado</div><p class="value">APROVADO</p><p>Sem vínculo com uma consulta real</p></article>
+    </div>
+    <h2>Observações</h2>
+    <div class="columns">
+        <p>A geração usa fontes incorporadas e métricas reais. O fluxo respeita os limites da área imprimível.</p>
+        <p>As colunas distribuem o conteúdo com separação visual. O texto continua selecionável e pesquisável.</p>
+        <p>As camadas CSS organizam a cascata. As regras deste documento se destinam à impressão.</p>
+        <p>Os cabeçalhos são medidos novamente dentro da largura disponível nas margens da página.</p>
+    </div>
+    <p class="relief">Borda dupla, com duas faixas pintadas e um intervalo preservado.</p>
+    <a class="reference" href="#details">Consultar os detalhes</a>
+    <h1 id="details">Detalhes da análise</h1>
+    <table>
+        <thead><tr><th>Item</th><th>Descrição</th><th>Resultado</th></tr></thead>
+        <tbody>
+            <tr><td>01</td><td>Identificação textual</td><td>Conferida</td></tr>
+            <tr><td>02</td><td>Composição dos cartões</td><td>Demonstrativa</td></tr>
+            <tr><td>03</td><td>Referências e paginação</td><td>Validadas por teste</td></tr>
+        </tbody>
+    </table>
+    <ol reversed start="5"><li>Revisão de conteúdo</li><li value="2">Verificação de referências</li><li>Encerramento</li></ol>
+    <svg xmlns="http://www.w3.org/2000/svg" width="180" height="44" viewBox="0 0 180 44">
+        <rect x="1" y="1" width="178" height="42" rx="6" fill="#207788"/>
+        <text x="90" y="27" text-anchor="middle" fill="white" font-family="sans-serif" font-size="15">SVG incorporado</text>
+    </svg>
+    <p><a class="reference" href="#summary">Voltar ao resumo</a></p>
+</body>
+</html>

@@ -1,0 +1,408 @@
+[
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-transcoder",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-transcoder/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-transcoder/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-anim",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-anim/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-anim/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-css",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-css/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-css/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-ext",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-ext/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-ext/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-parser",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-parser/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-parser/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-svg-dom",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-svg-dom/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-svg-dom/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-awt-util",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-awt-util/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-awt-util/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "xmlgraphics-commons",
+    "version": "2.11",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/xmlgraphics-commons/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/xmlgraphics-commons/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "commons-io",
+    "artifactId": "commons-io",
+    "version": "2.17.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/commons-io/META-INF/LICENSE.txt",
+      "META-INF/pdfloom/licenses/commons-io/META-INF/NOTICE.txt"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-bridge",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-bridge/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-bridge/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-script",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-script/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-script/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-dom",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-dom/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-dom/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "xml-apis",
+    "artifactId": "xml-apis",
+    "version": "1.4.01",
+    "license": "Apache-2.0 AND W3C AND SAX-public-domain",
+    "notices": [
+      "META-INF/pdfloom/licenses/xml-apis/license/LICENSE",
+      "META-INF/pdfloom/licenses/xml-apis/license/LICENSE.dom-documentation.txt",
+      "META-INF/pdfloom/licenses/xml-apis/license/LICENSE.dom-software.txt",
+      "META-INF/pdfloom/licenses/xml-apis/license/LICENSE.sax.txt",
+      "META-INF/pdfloom/licenses/xml-apis/license/NOTICE",
+      "META-INF/pdfloom/licenses/xml-apis/license/README.dom.txt",
+      "META-INF/pdfloom/licenses/xml-apis/license/README.sax.txt"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-gvt",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-gvt/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-gvt/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-shared-resources",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-shared-resources/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-shared-resources/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-svggen",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-svggen/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-svggen/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-util",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-util/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-util/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-constants",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-constants/META-INF/LICENSE",
+      "META-INF/pdfloom/licenses/batik-constants/META-INF/NOTICE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-i18n",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-i18n/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-i18n/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-xml",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-xml/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-xml/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "xml-apis",
+    "artifactId": "xml-apis-ext",
+    "version": "1.3.04",
+    "license": "Apache-2.0 AND W3C",
+    "notices": [
+      "META-INF/pdfloom/licenses/xml-apis-ext/license/LICENSE",
+      "META-INF/pdfloom/licenses/xml-apis-ext/license/LICENSE.dom-documentation.txt",
+      "META-INF/pdfloom/licenses/xml-apis-ext/license/LICENSE.dom-software.txt",
+      "META-INF/pdfloom/licenses/xml-apis-ext/license/LICENSE.sac.html",
+      "META-INF/pdfloom/licenses/xml-apis-ext/license/NOTICE",
+      "META-INF/pdfloom/licenses/xml-apis-ext/license/README.dom.txt"
+    ]
+  },
+  {
+    "groupId": "org.apache.xmlgraphics",
+    "artifactId": "batik-codec",
+    "version": "1.19",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/batik-codec/META-INF/NOTICE",
+      "META-INF/pdfloom/licenses/batik-codec/META-INF/LICENSE"
+    ]
+  },
+  {
+    "groupId": "org.slf4j",
+    "artifactId": "slf4j-api",
+    "version": "2.0.18",
+    "license": "MIT",
+    "notices": [
+      "META-INF/pdfloom/licenses/slf4j-api/META-INF/LICENSE.txt"
+    ]
+  },
+  {
+    "groupId": "org.jsoup",
+    "artifactId": "jsoup",
+    "version": "1.23.2",
+    "license": "MIT",
+    "notices": [
+      "META-INF/pdfloom/licenses/jsoup/META-INF/jsoup/LICENSE"
+    ]
+  },
+  {
+    "groupId": "com.helger",
+    "artifactId": "ph-css",
+    "version": "8.2.2",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-css/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-css/LICENSE",
+      "META-INF/pdfloom/licenses/ph-css/NOTICE"
+    ]
+  },
+  {
+    "groupId": "com.helger.commons",
+    "artifactId": "ph-typeconvert",
+    "version": "12.5.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-typeconvert/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-typeconvert/LICENSE",
+      "META-INF/pdfloom/licenses/ph-typeconvert/NOTICE"
+    ]
+  },
+  {
+    "groupId": "com.helger.commons",
+    "artifactId": "ph-collection",
+    "version": "12.5.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-collection/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-collection/LICENSE",
+      "META-INF/pdfloom/licenses/ph-collection/NOTICE"
+    ]
+  },
+  {
+    "groupId": "com.helger.commons",
+    "artifactId": "ph-base",
+    "version": "12.5.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-base/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-base/LICENSE",
+      "META-INF/pdfloom/licenses/ph-base/NOTICE"
+    ]
+  },
+  {
+    "groupId": "com.helger.commons",
+    "artifactId": "ph-cache",
+    "version": "12.5.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-cache/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-cache/LICENSE",
+      "META-INF/pdfloom/licenses/ph-cache/NOTICE"
+    ]
+  },
+  {
+    "groupId": "com.helger.commons",
+    "artifactId": "ph-annotations",
+    "version": "12.5.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-annotations/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-annotations/LICENSE",
+      "META-INF/pdfloom/licenses/ph-annotations/NOTICE"
+    ]
+  },
+  {
+    "groupId": "org.jspecify",
+    "artifactId": "jspecify",
+    "version": "1.0.1",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/jspecify/LICENSE.txt"
+    ]
+  },
+  {
+    "groupId": "com.helger.commons",
+    "artifactId": "ph-statistics",
+    "version": "12.5.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-statistics/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-statistics/LICENSE",
+      "META-INF/pdfloom/licenses/ph-statistics/NOTICE"
+    ]
+  },
+  {
+    "groupId": "com.helger.commons",
+    "artifactId": "ph-io",
+    "version": "12.5.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-io/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-io/LICENSE",
+      "META-INF/pdfloom/licenses/ph-io/NOTICE"
+    ]
+  },
+  {
+    "groupId": "com.helger.commons",
+    "artifactId": "ph-mime",
+    "version": "12.5.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-mime/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-mime/LICENSE",
+      "META-INF/pdfloom/licenses/ph-mime/NOTICE"
+    ]
+  },
+  {
+    "groupId": "com.helger.commons",
+    "artifactId": "ph-text",
+    "version": "12.5.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/ph-text/LICENSE.txt",
+      "META-INF/pdfloom/licenses/ph-text/LICENSE",
+      "META-INF/pdfloom/licenses/ph-text/NOTICE"
+    ]
+  },
+  {
+    "groupId": "org.apache.pdfbox",
+    "artifactId": "pdfbox",
+    "version": "3.0.8",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/pdfbox/META-INF/LICENSE",
+      "META-INF/pdfloom/licenses/pdfbox/META-INF/NOTICE"
+    ]
+  },
+  {
+    "groupId": "org.apache.pdfbox",
+    "artifactId": "pdfbox-io",
+    "version": "3.0.8",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/pdfbox-io/META-INF/LICENSE",
+      "META-INF/pdfloom/licenses/pdfbox-io/META-INF/NOTICE"
+    ]
+  },
+  {
+    "groupId": "org.apache.pdfbox",
+    "artifactId": "fontbox",
+    "version": "3.0.8",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/fontbox/META-INF/LICENSE",
+      "META-INF/pdfloom/licenses/fontbox/META-INF/NOTICE"
+    ]
+  },
+  {
+    "groupId": "commons-logging",
+    "artifactId": "commons-logging",
+    "version": "1.4.0",
+    "license": "Apache-2.0",
+    "notices": [
+      "META-INF/pdfloom/licenses/commons-logging/META-INF/LICENSE.txt",
+      "META-INF/pdfloom/licenses/commons-logging/META-INF/NOTICE.txt"
+    ]
+  }
+]

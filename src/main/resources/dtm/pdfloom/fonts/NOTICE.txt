@@ -1,0 +1,9 @@
+Roboto bundled font notices (retained from the original font name tables)
+
+Copyright 2015 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0
+
+Roboto is a trademark of Google.
+
+http://www.apache.org/licenses/LICENSE-2.0

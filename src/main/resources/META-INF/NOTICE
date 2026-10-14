@@ -1,0 +1,14 @@
+PdfLoom
+Copyright 2026 PdfLoom contributors
+
+This product includes jsoup (MIT), ph-css (Apache-2.0), Apache PDFBox and Apache Batik (Apache-2.0), their permissively licensed dependencies, and Roboto fonts (Apache-2.0).
+Individual notices are retained under META-INF/pdfloom/licenses. Font license: dtm/pdfloom/fonts/LICENSE.txt.
+Roboto: Copyright 2015 Google Inc. All Rights Reserved. Roboto is a trademark of Google.
+Original bundled font name-table notices: dtm/pdfloom/fonts/NOTICE.txt.
+XML APIs include W3C/SAX notices, retained in their entirety.
+
+Liberation Sans, Liberation Mono and Liberation Serif 2.1.5 (unmodified) are distributed under the SIL Open Font License 1.1.
+Copyright (c) 2010 Google Corporation; Copyright (c) 2012 Red Hat, Inc.
+Reserved font names: Arimo, Tinos, Cousine, Liberation.
+The complete license and attribution are retained in dtm/pdfloom/fonts/liberation/LICENSE and AUTHORS.
+Font provenance and SHA-256: dtm/pdfloom/fonts/liberation/manifest.json.

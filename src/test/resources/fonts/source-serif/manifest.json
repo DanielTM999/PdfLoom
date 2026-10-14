@@ -1,0 +1,9 @@
+{
+  "source": "https://raw.githubusercontent.com/adobe-fonts/source-serif/3.001R/",
+  "version": "3.001R",
+  "license": "OFL-1.1",
+  "files": {
+    "SourceSerifPro-Regular.otf": "5bea07b9360400b9a1b21f6bd1a7c11b0d9fd7ed520cb2947b08e043254dc760",
+    "LICENSE.md": "80c6ab285b3ee07cfd7ee0c4d682a79d250240925ebe6af74bb929736cab0b87"
+  }
+}
