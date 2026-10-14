@@ -1,6 +1,10 @@
 jdk:
   - openjdk21
 
+before_install:
+  - git config --global --add safe.directory /build
+  - for attempt in 1 2 3 4; do if sdk install maven 3.9.16 && test -x "$HOME/.sdkman/candidates/maven/3.9.16/bin/mvn"; then break; fi; if [ "$attempt" -eq 4 ]; then exit 1; fi; sleep 5; done
+
 install:
-  - chmod +x mvnw
-  - ./mvnw -B install -DskipTests
+  - $HOME/.sdkman/candidates/maven/3.9.16/bin/mvn -v
+  - $HOME/.sdkman/candidates/maven/3.9.16/bin/mvn -B install -DskipTests
