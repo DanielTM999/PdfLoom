@@ -32,28 +32,65 @@ Biblioteca Java 21 que converte HTML + CSS em PDF paginado. O parsing usa jsoup 
 
 ## Instalação
 
-O artefato ainda não está publicado em repositório Maven. Instale-o localmente:
+### JitPack
+
+A biblioteca é publicada pelo [JitPack](https://jitpack.io/#DanielTM999/PdfLoom) a partir das tags do repositório GitHub `DanielTM999/PdfLoom`. A versão da dependência é a **tag Git**. Adicione o repositório e a dependência ao `pom.xml` da aplicação:
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.github.DanielTM999</groupId>
+        <artifactId>PdfLoom</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+</dependencies>
+```
+
+No Gradle:
+
+```groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.DanielTM999:PdfLoom:1.0.0'
+}
+```
+
+Requer Java 21 ou superior. As dependências (jsoup, ph-css, PDFBox, Batik) chegam transitivamente pelo POM publicado. Para receber um JAR único com tudo embutido, use o classificador `all` (`<classifier>all</classifier>` no Maven ou `'com.github.DanielTM999:PdfLoom:1.0.0:all'` no Gradle). Nesse caso, a aplicação não deve declarar essas bibliotecas em outras versões.
+
+### Instalação local
+
+Para usar um checkout local, instale-o no repositório Maven da máquina:
 
 ```powershell
 mvn clean install
 ```
 
-Depois declare a dependência:
+Nesse caso, use as coordenadas do próprio `pom.xml`:
 
 ```xml
 <dependency>
     <groupId>dtm.pdfloom</groupId>
     <artifactId>pdfloom</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
-O build gera dois JARs:
+As coordenadas do JitPack e as locais são diferentes; use uma delas em cada aplicação. O build local gera dois JARs:
 
 | Arquivo | Uso |
 |---|---|
-| `target/pdfloom-1.0.0-SNAPSHOT.jar` | Projetos Maven/Gradle; as dependências vêm do `pom.xml`. |
-| `target/pdfloom-1.0.0-SNAPSHOT-all.jar` | JAR único (Shade) com todas as dependências embutidas, para uso fora do Maven. Os pacotes não são renomeados; prefira o JAR comum quando o projeto já usa jsoup, ph-css, PDFBox ou Batik em outras versões. |
+| `target/pdfloom-1.0.0.jar` | Projetos Maven/Gradle; as dependências vêm do `pom.xml`. |
+| `target/pdfloom-1.0.0-all.jar` | JAR único (Shade) com todas as dependências embutidas, para uso fora do Maven. Os pacotes não são renomeados; prefira o JAR comum quando o projeto já usa jsoup, ph-css, PDFBox ou Batik em outras versões. |
 
 ## Uso rápido
 
