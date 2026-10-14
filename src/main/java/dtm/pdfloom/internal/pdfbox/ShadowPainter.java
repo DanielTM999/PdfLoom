@@ -60,13 +60,9 @@ final class ShadowPainter {
     static List<Raster> text(Paint.Text text, String value, PdfFontRegistry fonts) {
         List<Raster> result = new ArrayList<>();
         List<Shadow> shadows = parse(text.shadow(), true);
-        Area glyphs = new Area();
-        for (dtm.pdfloom.font.ComplexText.Run run : fonts.shape(value, text.font(), text.size())) {
-            AffineTransform position =
-                    AffineTransform.getTranslateInstance(
-                            text.x() + run.x(), text.y() + text.ascent());
-            glyphs.add(new Area(position.createTransformedShape(run.glyphs().getOutline())));
-        }
+        AffineTransform position =
+                AffineTransform.getTranslateInstance(text.x(), text.y() + text.ascent());
+        Area glyphs = new Area(position.createTransformedShape(fonts.outline(value, text.font(), text.size())));
         for (int index = shadows.size() - 1; index >= 0; index--) {
             Shadow shadow = shadows.get(index);
             Shape shifted =

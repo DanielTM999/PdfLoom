@@ -289,6 +289,10 @@ public final class PdfConversionConfig {
             return this;
         }
 
+        public Builder standardFont(String family, int weight, boolean italic, String pdfName) {
+            return font(family, weight, italic, "standard14:" + Objects.requireNonNull(pdfName));
+        }
+
         public Builder metadata(String title, String author, String subject) {
             metadata = new Metadata(title, author, subject);
             return this;

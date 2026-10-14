@@ -305,6 +305,27 @@ O que não funciona:
 
 Uma fonte declarada com `@font-face` ou registrada com `.font(...)` tem prioridade sobre essas substituições:
 
+O usuário pode registrar suas próprias fontes por caminhos relativos ao diretório de recursos, sem alterar a biblioteca. Registre cada peso e estilo que será usado:
+
+```java
+PdfConversionConfig config = PdfConversionConfig.builder()
+        .baseDirectory(Path.of("resources"))
+        .font("Minha Fonte", 400, false, "fonts/MinhaFonte-Regular.ttf")
+        .font("Minha Fonte", 700, false, "fonts/MinhaFonte-Bold.ttf")
+        .font("Minha Fonte", 400, true, "fonts/MinhaFonte-Italic.ttf")
+        .standardFont("Courier-Bold", 700, false, "Courier-Bold")
+        .build();
+```
+
+```css
+body { font-family: "Minha Fonte"; }
+.codigo { font-family: "Courier-Bold"; font-weight: bold; }
+```
+
+`standardFont(familia, peso, italico, nomePdf)` registra uma das 14 fontes padrão do PDF pelo nome PostScript exato, como `Courier-Bold`, `Helvetica` ou `Times-Roman`. Essas fontes são gravadas diretamente como Type 1, sem arquivo externo e sem substituir as famílias configuradas por padrão. Caracteres não disponíveis usam as fontes Unicode embutidas. Para kerning e ligaturas, use uma fonte externa.
+
+Também é possível declarar o registro externo no próprio CSS:
+
 ```css
 @font-face {
     font-family: "Inter";

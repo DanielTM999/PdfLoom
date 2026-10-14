@@ -18,7 +18,9 @@ public final class PdfFontRegistry implements TextMetrics {
     private record Face(String family, int weight, boolean italic, String key) {
     }
 
-    private final Map<String, PDType0Font> fonts = new HashMap<>();
+    private final Map<String, PDFont> fonts = new HashMap<>();
+    private final Map<String, Map<String, org.apache.fontbox.util.BoundingBox>> standardBounds =
+            new HashMap<>();
     private final Map<String, java.awt.Font> shapingFonts = new HashMap<>();
     private final Set<String> outlinedFonts = new HashSet<>();
     private final Map<String, LogicalUnicodeFont> logicalFonts = new HashMap<>();
@@ -78,6 +80,10 @@ public final class PdfFontRegistry implements TextMetrics {
             }
         }
         for (PdfConversionConfig.FontSource f : config.fonts) {
+            if (f.reference().startsWith("standard14:")) {
+                addStandard(f.family(), f.weight(), f.italic(), f.reference().substring(11));
+                continue;
+            }
             ResourceLoader.Data d = loader.load(f.reference(), origin);
             if (d != null) {
                 addData(f.family(), f.weight(), f.italic(), d.bytes());
@@ -134,6 +140,22 @@ public final class PdfFontRegistry implements TextMetrics {
         }
     }
 
+    private void addStandard(String family, int weight, boolean italic, String name) {
+        Standard14Fonts.FontName standard =
+                Arrays.stream(Standard14Fonts.FontName.values())
+                        .filter(value -> value.getName().equals(name))
+                        .findFirst()
+                        .orElseThrow(() -> new PdfConversionException("Unknown standard PDF font: " + name));
+        String key = family.toLowerCase(Locale.ROOT) + ":" + weight + ":" + italic + ":" + faces.size();
+        fonts.put(key, new PDType1Font(standard));
+        Map<String, org.apache.fontbox.util.BoundingBox> bounds = new HashMap<>();
+        for (org.apache.fontbox.afm.CharMetric metric : Standard14Fonts.getAFM(name).getCharMetrics()) {
+            bounds.put(metric.getName(), metric.getBoundingBox());
+        }
+        standardBounds.put(key, bounds);
+        faces.add(new Face(family.toLowerCase(Locale.ROOT), weight, italic, key));
+    }
+
     private void add(String family, int weight, boolean italic, InputStream in) throws IOException {
         String key =
                 family.toLowerCase(Locale.ROOT) + ":" + weight + ":" + italic + ":" + faces.size();
@@ -141,7 +163,7 @@ public final class PdfFontRegistry implements TextMetrics {
                 dtm.pdfloom.font.WoffDecoder.decode(in.readAllBytes(), config.maxResourceBytes);
         boolean cff = bytes.length >= 4 && java.nio.ByteBuffer.wrap(bytes).getInt() == 0x4f54544f;
         if (cff) {
-            PDType0Font logical =
+            PDType0Font logical = (PDType0Font)
                     faces.stream()
                             .filter(face -> face.family.equals("roboto"))
                             .map(face -> fonts.get(face.key))
@@ -227,7 +249,10 @@ public final class PdfFontRegistry implements TextMetrics {
         boolean ligatures =
                 style.get("font-variant-ligatures").contains("common-ligatures")
                         && !style.get("font-variant-ligatures").contains("no-common-ligatures");
-        if (kerning || ligatures) {
+        if ((kerning || ligatures) && fonts.get(key) instanceof PDType1Font) {
+            config.report(new Diagnostic(Diagnostic.Severity.WARNING, "UNSUPPORTED_FONT_FEATURE",
+                    "Kerning and ligatures require an external font: " + fonts.get(key).getName()));
+        } else if (kerning || ligatures) {
             String styledKey = key + ":kern=" + kerning + ":liga=" + ligatures;
             if (!shapingFonts.containsKey(styledKey)) {
                 Map<java.awt.font.TextAttribute, Object> attributes = new HashMap<>();
@@ -302,14 +327,14 @@ public final class PdfFontRegistry implements TextMetrics {
     @Override
     public Font font(ComputedStyle style, String text) {
         Font preferred = font(style);
-        if (shapingFonts.get(preferred.key()).canDisplayUpTo(text) < 0) {
+        if (supports(preferred.key(), text)) {
             return preferred;
         }
         int weight = CascadeStyleResolver.weight(style.get("font-weight", "400"));
         boolean italic = style.is("font-style", "italic") || style.is("font-style", "oblique");
         Face fallback =
                 faces.stream()
-                        .filter(face -> shapingFonts.get(face.key()).canDisplayUpTo(text) < 0)
+                        .filter(face -> supports(face.key(), text))
                         .min(
                                 Comparator.comparingInt(
                                         face ->
@@ -324,6 +349,22 @@ public final class PdfFontRegistry implements TextMetrics {
                 preferred.size(),
                 ascent(fallback.key(), preferred.size()),
                 descent(fallback.key(), preferred.size()));
+    }
+
+    private boolean supports(String key, String text) {
+        if (fonts.get(key) instanceof PDType1Font font) {
+            if (dtm.pdfloom.font.ComplexText.requiresShaping(text)) {
+                return false;
+            }
+            try {
+                font.encode(text.replace("\n", "").replace("\r", "").replace("\t", "")
+                        .replace("\uE000", "0").replace("\uE001", "0"));
+                return true;
+            } catch (IOException | IllegalArgumentException exception) {
+                return false;
+            }
+        }
+        return shapingFonts.get(key).canDisplayUpTo(text) < 0;
     }
 
     @Override
@@ -375,8 +416,26 @@ public final class PdfFontRegistry implements TextMetrics {
             return new Bounds(ascent, descent);
         }
         try {
+            if (fonts.get(font.key()) instanceof PDType1Font standard) {
+                double ascent = 0, descent = 0;
+                byte[] codes;
+                try {
+                    codes = standard.encode(text);
+                } catch (IllegalArgumentException exception) {
+                    return new Bounds(font.ascent(), font.descent());
+                }
+                for (byte code : codes) {
+                    org.apache.fontbox.util.BoundingBox box =
+                            standardBounds.get(font.key()).get(standard.getEncoding().getName(Byte.toUnsignedInt(code)));
+                    if (box != null) {
+                        ascent = Math.max(ascent, box.getUpperRightY());
+                        descent = Math.max(descent, -box.getLowerLeftY());
+                    }
+                }
+                return new Bounds(ascent / 1000 * font.size(), descent / 1000 * font.size());
+            }
             org.apache.fontbox.ttf.TrueTypeFont ttf =
-                    ((PDCIDFontType2) fonts.get(font.key()).getDescendantFont()).getTrueTypeFont();
+                    ((PDCIDFontType2) ((PDType0Font) fonts.get(font.key())).getDescendantFont()).getTrueTypeFont();
             org.apache.fontbox.ttf.CmapLookup cmap = ttf.getUnicodeCmapLookup();
             double ascent = 0, descent = 0;
             for (int cp : text.codePoints().toArray()) {
@@ -400,6 +459,34 @@ public final class PdfFontRegistry implements TextMetrics {
                 text, shapingFonts.get(key).deriveFont((float) size));
     }
 
+    public java.awt.Shape outline(String text, String key, double size) {
+        java.awt.geom.Area result = new java.awt.geom.Area();
+        if (fonts.get(key) instanceof PDType1Font standard) {
+            try {
+                double x = 0;
+                double units = standard.getFontBoxFont() instanceof org.apache.fontbox.ttf.TrueTypeFont trueType
+                        ? trueType.getUnitsPerEm() : 1000;
+                for (byte code : standard.encode(text)) {
+                    int value = Byte.toUnsignedInt(code);
+                    java.awt.geom.AffineTransform transform =
+                            new java.awt.geom.AffineTransform(size / units, 0, 0, -size / units, x, 0);
+                    java.awt.Shape glyph = Standard14Fonts.getGlyphPath(
+                            Standard14Fonts.getMappedFontName(standard.getName()), standard.getEncoding().getName(value));
+                    result.add(new java.awt.geom.Area(transform.createTransformedShape(glyph)));
+                    x += standard.getWidth(value) / 1000 * size;
+                }
+            } catch (IOException exception) {
+                throw new PdfConversionException("Cannot read standard font outlines", exception);
+            }
+        } else {
+            for (dtm.pdfloom.font.ComplexText.Run run : shape(text, key, size)) {
+                result.add(new java.awt.geom.Area(java.awt.geom.AffineTransform
+                        .getTranslateInstance(run.x(), 0).createTransformedShape(run.glyphs().getOutline())));
+            }
+        }
+        return result;
+    }
+
     public double ascent(String key, double size) {
         return verticalMetric(key, size, true);
     }
@@ -409,6 +496,14 @@ public final class PdfFontRegistry implements TextMetrics {
     }
 
     private double verticalMetric(String key, double size, boolean ascent) {
+        if (fonts.get(key) instanceof PDType1Font standard) {
+            org.apache.fontbox.afm.FontMetrics metrics = Standard14Fonts.getAFM(standard.getName());
+            double value = ascent ? metrics.getAscender() : -metrics.getDescender();
+            if (value <= 0) {
+                value = ascent ? metrics.getFontBBox().getUpperRightY() : -metrics.getFontBBox().getLowerLeftY();
+            }
+            return Math.max(0, value) / 1000 * size;
+        }
         if (outlinedFonts.contains(key)) {
             java.awt.font.LineMetrics metrics =
                     shapingFonts
@@ -420,7 +515,7 @@ public final class PdfFontRegistry implements TextMetrics {
         }
         try {
             org.apache.fontbox.ttf.TrueTypeFont ttf =
-                    ((PDCIDFontType2) fonts.get(key).getDescendantFont()).getTrueTypeFont();
+                    ((PDCIDFontType2) ((PDType0Font) fonts.get(key)).getDescendantFont()).getTrueTypeFont();
             org.apache.fontbox.ttf.OS2WindowsMetricsTable os2 = ttf.getOS2Windows();
             org.apache.fontbox.ttf.HorizontalHeaderTable header = ttf.getHorizontalHeader();
             double metric =
@@ -444,7 +539,7 @@ public final class PdfFontRegistry implements TextMetrics {
     public PDFont logicalFont(String key) throws IOException {
         LogicalUnicodeFont font = logicalFonts.get(key);
         if (font == null) {
-            font = new LogicalUnicodeFont(document, fonts.get(key), shapingFonts.get(key));
+            font = new LogicalUnicodeFont(document, (PDType0Font) fonts.get(key), shapingFonts.get(key));
             logicalFonts.put(key, font);
         }
         return font.font();
