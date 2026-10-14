@@ -15,8 +15,11 @@ import dtm.pdfloom.html.*;
 import dtm.pdfloom.resource.ResourceLoader;
 import dtm.pdfloom.style.*;
 
+import org.jsoup.nodes.Entities;
+
 import java.net.URI;
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.regex.*;
 
 public final class CascadeStyleResolver implements StyleResolver {
@@ -164,7 +167,7 @@ public final class CascadeStyleResolver implements StyleResolver {
         result.elements = document.elements();
         for (HtmlNode n : document.elements()) {
             if (n.tag.equals("style") && media(n.attr("media"))) {
-                read(n.textContent(), origin, 0);
+                read(embeddedCss(n.textContent()), origin, 0);
             }
             if (n.tag.equals("link")
                     && Arrays.asList(n.attr("rel").toLowerCase(Locale.ROOT).split("\\s+"))
@@ -293,34 +296,63 @@ public final class CascadeStyleResolver implements StyleResolver {
     }
 
     private CascadingStyleSheet parseCss(String source) {
+        return parseCss(source, this::warn);
+    }
+
+    private String embeddedCss(String source) {
+        if (source.indexOf('&') < 0 || validCss(source)) {
+            return source;
+        }
+        String decoded = Entities.unescape(source);
+        return !decoded.equals(source) && validCss(decoded) ? decoded : source;
+    }
+
+    private boolean validCss(String source) {
+        Set<String> errors = new HashSet<>();
+        try {
+            CascadingStyleSheet sheet = parseCss(source, (code, message) -> errors.add(code));
+            return sheet != null
+                    && Collections.disjoint(
+                            errors,
+                            Set.of(
+                                    "CSS_PARSE_RECOVERY",
+                                    "CSS_UNEXPECTED_RULE",
+                                    "CSS_SKIPPED_SYNTAX",
+                                    "CSS_ILLEGAL_CHARACTER"));
+        } catch (PdfConversionException exception) {
+            return false;
+        }
+    }
+
+    private CascadingStyleSheet parseCss(String source, BiConsumer<String, String> diagnostics) {
         CSSReaderSettings settings = new CSSReaderSettings().setFallbackCharset(config.charset);
         settings.setCustomErrorHandler(
                 new ICSSParseErrorHandler() {
                     public void onCSSParseError(ParseException e, Token token) {
-                        warn("CSS_PARSE_RECOVERY", e.getMessage());
+                        diagnostics.accept("CSS_PARSE_RECOVERY", e.getMessage());
                     }
 
                     public void onCSSUnexpectedRule(Token token, String rule, String message) {
-                        warn("CSS_UNEXPECTED_RULE", rule + ": " + message);
+                        diagnostics.accept("CSS_UNEXPECTED_RULE", rule + ": " + message);
                     }
 
                     public void onCSSDeprecatedProperty(Token token, Token next) {
-                        warn("CSS_DEPRECATED_SYNTAX", token.image);
+                        diagnostics.accept("CSS_DEPRECATED_SYNTAX", token.image);
                     }
 
                     public void onCSSBrowserCompliantSkip(
                             ParseException e, Token start, Token end) {
-                        warn("CSS_SKIPPED_SYNTAX", e.getMessage());
+                        diagnostics.accept("CSS_SKIPPED_SYNTAX", e.getMessage());
                     }
 
                     public void onIllegalCharacter(char character) {
-                        warn("CSS_ILLEGAL_CHARACTER", "U+" + Integer.toHexString(character));
+                        diagnostics.accept("CSS_ILLEGAL_CHARACTER", "U+" + Integer.toHexString(character));
                     }
                 });
         settings.setInterpretErrorHandler(
                 new ICSSInterpretErrorHandler() {
                     public void onCSSInterpretationWarning(String message) {
-                        warn("CSS_INTERPRETATION", message);
+                        diagnostics.accept("CSS_INTERPRETATION", message);
                     }
 
                     public void onCSSInterpretationError(String message) {

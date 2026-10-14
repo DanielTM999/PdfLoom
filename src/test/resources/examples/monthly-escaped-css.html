@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório mensal de documentos</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 14mm 12mm 16mm;
+            @bottom-right {
+                content: &quot;Página &quot; counter(page) &quot; de &quot; counter(pages);
+                font-family: Arial, sans-serif;
+                font-size: 9px;
+                color: #777;
+            }
+        }
+        body { font-family: Arial, sans-serif; font-size: 12px; color: #333; margin: 0; }
+        header { padding: 12px; background: #f0eded; border-bottom: 2px solid #333; }
+        header::after { content: &quot;&quot;; display: block; clear: both; }
+        header img { float: left; width: 48px; margin-right: 12px; }
+        h1 { margin: 0; font-size: 20px; }
+        h2 { font-size: 16px; margin: 18px 0 8px; page-break-after: avoid; }
+        .details, .summary { padding: 10px; margin-top: 16px; border: 1px solid #ddd; background: #f7f7f7; page-break-inside: avoid; }
+        table { width: 100%; border-collapse: collapse; font-size: 9px; }
+        thead { display: table-header-group; }
+        tr { page-break-inside: avoid; }
+        th, td { border: 1px solid #333; padding: 4px; }
+        th { background: #e0e0e0; }
+        tr:nth-child(even) { background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="assets/logo.png" alt="Logo da empresa exemplo">
+        <h1>Relatório mensal de documentos</h1>
+        <p>Empresa Exemplo — Outubro de 2026</p>
+    </header>
+    <div class="details">
+        <h2>Informações da empresa</h2>
+        <p>Empresa Exemplo — Rua Central, 10 — Cidade Exemplo</p>
+    </div>
+    <h2>Documentos contabilizados</h2>
+    <table>
+        <thead><tr><th>Documento</th><th>Tipo</th><th>Responsável</th><th>Placa</th><th>Identificador</th><th>Veículo</th><th>Data</th><th>Valor</th></tr></thead>
+        <tbody>{{rows}}</tbody>
+    </table>
+    <div class="summary">
+        <h2>Resumo financeiro</h2>
+        <p>Quantidade: 100</p>
+        <p>Total: R$ 10.000,00</p>
+        <p>Descontos: R$ 500,00</p>
+        <p>Líquido: R$ 9.500,00</p>
+    </div>
+</body>
+</html>
